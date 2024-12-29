@@ -23,6 +23,13 @@
             font-weight: 500;
         }
 
+        h2.bold-info {
+            font-size: 22px;
+            font-weight: bold;
+            color: #d32f2f; /* Bold Red for emphasis */
+            margin-top: 20px;
+        }
+
         .container {
             width: 90%;
             max-width: 900px;
@@ -163,6 +170,7 @@
 
     <div class="container" id="converterContainer">
         <h1>Account Pricing in Different Currencies</h1>
+        <h2 class="bold-info">Each account purchased will contain 1200 coins</h2>
         <div id="loadingBar" class="loading"></div>
         <div class="button-container">
             <button id="refreshButton">Refresh Exchange Rates</button>
@@ -178,9 +186,11 @@
         <h1>Currency Converter Instructions</h1>
         <p>Welcome to the Currency Converter tool. Here's how to use it:</p>
         <ol>
+            <li><strong>Each account purchased will contain 1200 coins.</strong></li>
             <li>Click on the "Refresh Exchange Rates" button to update the latest exchange rates.</li>
             <li>The account prices will be displayed in GBP (British Pounds), USD (US Dollars), INR (Indian Rupees), and EUR (Euros).</li>
             <li>The exchange rates are fetched from a live API, so the prices are updated in real time.</li>
+            <li>If you have any questions or need assistance, contact <strong>@H886ki</strong> on Telegram.</li>
             <li>You can click the link below to return to the converter tool.</li>
         </ol>
         <div class="back-link">
@@ -228,7 +238,6 @@
             document.getElementById('loadingBar').style.display = 'block';
             document.getElementById('refreshMessage').textContent = "Updating exchange rates...";
             
-            // Fetch live data from the API
             try {
                 const response = await fetch('https://v6.exchangerate-api.com/v6/e813144600ef51f4b5f66258/latest/GBP');
                 const data = await response.json();
@@ -251,10 +260,8 @@
 
         document.getElementById('refreshButton').addEventListener('click', fetchExchangeRates);
 
-        // Initial load
         updatePrices();
 
-        // Toggle between the Converter and Instructions
         function showInstructions() {
             document.getElementById('converterContainer').style.display = 'none';
             document.getElementById('instructionsContainer').style.display = 'block';
@@ -268,4 +275,3 @@
 
 </body>
 </html>
-
