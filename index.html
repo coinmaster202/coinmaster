@@ -6,7 +6,6 @@
     <title>Currency Converter</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
     <style>
-        /* Base styles */
         body {
             font-family: 'Roboto', sans-serif;
             background-color: #f5f5f5;
@@ -38,7 +37,6 @@
             background-color: #ffffff;
             border-radius: 8px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
         }
 
         .tabs {
@@ -69,6 +67,35 @@
             color: #ffffff;
         }
 
+        .instructions {
+            display: none;
+            font-size: 18px;
+            color: #333;
+            text-align: left;
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #f1f3f4;
+            border-radius: 8px;
+        }
+
+        .instructions h2 {
+            font-size: 22px;
+            color: #202124;
+        }
+
+        .instructions ol {
+            font-size: 16px;
+            color: #555;
+            margin-top: 10px;
+            padding-left: 20px;
+        }
+
+        .instructions p.contact-info {
+            font-size: 16px;
+            color: #d32f2f;
+            margin-top: 20px;
+        }
+
         .loading-screen {
             display: none;
             font-size: 18px;
@@ -77,19 +104,11 @@
             margin-top: 20px;
         }
 
-        .loading {
+        .announcement-message {
             display: none;
-            width: 100%;
-            height: 5px;
-            background-color: #4285f4;
-            animation: loading 2s infinite;
-            border-radius: 5px;
-            margin-top: 10px;
-        }
-
-        @keyframes loading {
-            0% { width: 0; }
-            100% { width: 100%; }
+            font-size: 18px;
+            color: #d32f2f;
+            margin-top: 20px;
         }
     </style>
 </head>
@@ -97,19 +116,28 @@
     <div class="container">
         <h1>Account Pricing in Different Currencies</h1>
         <h2 class="bold-info" id="coinMessage">Each account purchased will contain 1200 coins</h2>
-        
+
         <div class="tabs">
             <div class="tab active" id="tab1200" onclick="switchTab('1200')">1200 Coins</div>
             <div class="tab" id="tab1700" onclick="switchTab('1700')">1700 Coins</div>
             <div class="tab" id="tab2700" onclick="switchTab('2700')">2700 Coins</div>
+            <div class="tab" id="tabInstructions" onclick="showInstructions()">Instructions</div>
         </div>
 
-        <div id="loadingBar" class="loading"></div>
         <div id="pricesContainer">
             <div id="prices"></div>
         </div>
         <div class="loading-screen" id="loadingScreen">Loading... Please wait</div>
-        <div class="loading-screen" id="announcementMessage">To be announced</div>
+        <div class="announcement-message" id="announcementMessage">To be announced</div>
+        <div class="instructions" id="instructionsContainer">
+            <h2>Instructions:</h2>
+            <ol>
+                <li>Click on the "1200 Coins", "1700 Coins", or "2700 Coins" tabs to view pricing or availability.</li>
+                <li>Pricing is available for 1200 coins per account.</li>
+                <li>1700 and 2700 coins tabs display availability announcements.</li>
+            </ol>
+            <p class="contact-info">For further assistance with payment, contact @H886ki on Telegram.</p>
+        </div>
     </div>
 
     <script>
@@ -131,8 +159,7 @@
             EUR: 1.17
         };
 
-        // Updates the prices for the default 1200 coins
-        async function updatePrices() {
+        function updatePrices() {
             const pricesDiv = document.getElementById('prices');
             pricesDiv.innerHTML = '<h2>Prices:</h2>';
             for (const [accountType, priceGBP] of Object.entries(pricesGBP)) {
@@ -150,29 +177,35 @@
         }
 
         function switchTab(tab) {
-            // Update active tab
             document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
             document.getElementById(`tab${tab}`).classList.add('active');
-            
-            // Update message based on the tab selected
-            const coinMessage = document.getElementById('coinMessage');
+            document.getElementById('instructionsContainer').style.display = 'none';
+
             if (tab === '1200') {
-                coinMessage.textContent = "Each account purchased will contain 1200 coins";
+                document.getElementById('coinMessage').textContent = "Each account purchased will contain 1200 coins";
                 document.getElementById('pricesContainer').style.display = 'block';
                 document.getElementById('loadingScreen').style.display = 'none';
                 document.getElementById('announcementMessage').style.display = 'none';
                 updatePrices();
-            } else {
-                coinMessage.textContent = `Each account purchased will contain ${tab} coins`;
+            } else if (tab === '1700' || tab === '2700') {
+                document.getElementById('coinMessage').textContent = `Each account purchased will contain ${tab} coins`;
                 document.getElementById('pricesContainer').style.display = 'none';
                 document.getElementById('loadingScreen').style.display = 'block';
-                document.getElementById('announcementMessage').style.display = 'none';
-                
                 setTimeout(() => {
                     document.getElementById('loadingScreen').style.display = 'none';
                     document.getElementById('announcementMessage').style.display = 'block';
-                }, 2000); // 2-second delay
+                }, 2000);
             }
+        }
+
+        function showInstructions() {
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.getElementById('tabInstructions').classList.add('active');
+            document.getElementById('coinMessage').textContent = "";
+            document.getElementById('pricesContainer').style.display = 'none';
+            document.getElementById('loadingScreen').style.display = 'none';
+            document.getElementById('announcementMessage').style.display = 'none';
+            document.getElementById('instructionsContainer').style.display = 'block';
         }
 
         // Initial load for 1200 coins tab
