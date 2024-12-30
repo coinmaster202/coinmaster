@@ -15,10 +15,6 @@
             text-align: center;
         }
 
-        h1, h2 {
-            margin: 10px;
-        }
-
         .container {
             width: 90%;
             max-width: 900px;
@@ -28,6 +24,10 @@
             border-radius: 8px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
             position: relative;
+        }
+
+        h1, h2 {
+            margin: 10px;
         }
 
         .tabs {
@@ -51,6 +51,19 @@
             color: #ffffff;
         }
 
+        #prices {
+            margin-top: 20px;
+        }
+
+        .price-item {
+            margin: 10px 0;
+            font-size: 16px;
+        }
+
+        .currency {
+            color: #4285f4;
+        }
+
         #refreshButton {
             margin-top: 20px;
             padding: 12px 30px;
@@ -60,10 +73,6 @@
             border-radius: 5px;
             font-size: 16px;
             cursor: pointer;
-        }
-
-        #prices, .instructions, .coming-soon {
-            margin-top: 20px;
         }
 
         .translation-container {
@@ -80,115 +89,135 @@
             border-radius: 5px;
             font-size: 14px;
         }
-
-        .dropdown:hover {
-            background-color: #d2e3fc;
-        }
-
-        .instructions {
-            display: none;
-            text-align: left;
-            font-size: 16px;
-        }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="translation-container">
             <label for="languageSelect" style="font-size: 14px;">Translate: </label>
-            <select id="languageSelect" class="dropdown" onchange="translateContent()">
+            <select id="languageSelect" class="dropdown">
                 <option value="en" selected>English</option>
                 <option value="es">Spanish</option>
                 <option value="fr">French</option>
                 <option value="de">German</option>
+                <option value="tr">Turkish</option>
+                <option value="sk">Slovak</option>
                 <option value="hi">Hindi</option>
             </select>
         </div>
 
-        <h1 id="title">Account Pricing in Different Currencies</h1>
+        <h1>Account Pricing in Different Currencies</h1>
         <h2 id="subtitle">Each account purchased will contain 1200 coins</h2>
 
         <div class="tabs">
             <div class="tab active" id="tab1200" onclick="switchTab('1200')">1200 Coins</div>
             <div class="tab" id="tab1700" onclick="switchTab('1700')">1700 Coins</div>
             <div class="tab" id="tab2700" onclick="switchTab('2700')">2700 Coins</div>
-            <div class="tab" id="tabInstructions" onclick="showInstructions()">Instructions</div>
         </div>
 
-        <div id="pricesContainer">
-            <div id="prices"></div>
-            <button id="refreshButton" onclick="fetchExchangeRates()">Refresh Exchange Rates</button>
-        </div>
-
-        <div class="instructions" id="instructionsContainer">
-            <h2 id="instructionsTitle">Instructions:</h2>
-            <ul>
-                <li id="instruction1">Click on the "1200 Coins", "1700 Coins", or "2700 Coins" tabs to view pricing or availability.</li>
-                <li id="instruction2">Click the "Refresh Exchange Rates" button to update currency conversion rates.</li>
-                <li id="instruction3">Pricing for the 1700 coins tab has been updated with specific details.</li>
-            </ul>
-            <p id="contactInfo">For further assistance with payment, contact @H886ki on Telegram.</p>
-        </div>
+        <div id="prices"></div>
+        <button id="refreshButton" onclick="fetchExchangeRates()">Refresh Exchange Rates</button>
     </div>
 
     <script>
-        const translations = {
-            en: {
-                title: "Account Pricing in Different Currencies",
-                subtitle1200: "Each account purchased will contain 1200 coins",
-                subtitle1700: "Each account purchased will contain 1700 coins",
-                subtitle2700: "Coming Soon",
-                languageLabel: "Translate:",
-                instructionsTitle: "Instructions:",
-                instruction1: "Click on the \"1200 Coins\", \"1700 Coins\", or \"2700 Coins\" tabs to view pricing or availability.",
-                instruction2: "Click the \"Refresh Exchange Rates\" button to update currency conversion rates.",
-                instruction3: "Pricing for the 1700 coins tab has been updated with specific details.",
-                contactInfo: "For further assistance with payment, contact @H886ki on Telegram."
-            },
-            es: {
-                title: "Precios de cuentas en diferentes monedas",
-                subtitle1200: "Cada cuenta comprada contendrá 1200 monedas",
-                subtitle1700: "Cada cuenta comprada contendrá 1700 monedas",
-                subtitle2700: "Próximamente",
-                languageLabel: "Traducir:",
-                instructionsTitle: "Instrucciones:",
-                instruction1: "Haga clic en las pestañas \"1200 monedas\", \"1700 monedas\" o \"2700 monedas\" para ver los precios o disponibilidad.",
-                instruction2: "Haga clic en el botón \"Actualizar tipos de cambio\" para actualizar las tasas de conversión.",
-                instruction3: "Se han actualizado los precios para la pestaña de 1700 monedas con detalles específicos.",
-                contactInfo: "Para obtener más ayuda con el pago, comuníquese con @H886ki en Telegram."
-            },
-            // Additional translations (French, German, Hindi) would be added here.
+        const prices1200 = {
+            "1 account": 1,
+            "10 accounts": 8,
+            "20 accounts": 17,
+            "30 accounts": 23,
+            "40 accounts": 30,
+            "50 accounts": 37,
+            "60 accounts": 42,
+            "70 accounts": 49,
+            "80 accounts": 56
         };
 
+        const prices1700 = {
+            "1 account": 3,
+            "10 accounts": 20,
+            "20 accounts": 40,
+            "30 accounts": 60,
+            "40 accounts": 80,
+            "50 accounts": 100,
+            "60 accounts": 120,
+            "70 accounts": 140,
+            "80 accounts": 160,
+            "90 accounts": 180,
+            "100 accounts": 200,
+            "110 accounts": 220,
+            "120 accounts": 240
+        };
+
+        let exchangeRates = { USD: 1.36, INR: 101.5, EUR: 1.17, TRY: 20.5, SKK: 26.5 }; // Example rates
         let currentTab = '1200';
-        let language = 'en';
+
+        function renderPrices() {
+            const pricesDiv = document.getElementById('prices');
+            pricesDiv.innerHTML = '';
+
+            const prices = currentTab === '1200' ? prices1200 : currentTab === '1700' ? prices1700 : null;
+
+            if (prices) {
+                for (const [accountType, priceGBP] of Object.entries(prices)) {
+                    const priceUSD = (priceGBP * exchangeRates.USD).toFixed(2);
+                    const priceINR = (priceGBP * exchangeRates.INR).toFixed(2);
+                    const priceEUR = (priceGBP * exchangeRates.EUR).toFixed(2);
+                    const priceTRY = (priceGBP * exchangeRates.TRY).toFixed(2);
+                    const priceSKK = (priceGBP * exchangeRates.SKK).toFixed(2);
+
+                    pricesDiv.innerHTML += `
+                        <div class="price-item">
+                            ${accountType}: 
+                            <span class="currency">£${priceGBP}</span> | 
+                            <span class="currency">$${priceUSD}</span> | 
+                            <span class="currency">₹${priceINR}</span> | 
+                            <span class="currency">€${priceEUR}</span> |
+                            <span class="currency">₺${priceTRY}</span> |
+                            <span class="currency">${priceSKK} SKK</span>
+                        </div>`;
+                }
+            } else if (currentTab === '2700') {
+                pricesDiv.innerHTML = '<h3>Coming Soon</h3>';
+            }
+        }
+
+        async function fetchExchangeRates() {
+            try {
+                const response = await fetch('https://v6.exchangerate-api.com/v6/e813144600ef51f4b5f66258/latest/GBP');
+                const data = await response.json();
+
+                if (data.result === 'success') {
+                    exchangeRates.USD = data.conversion_rates.USD;
+                    exchangeRates.INR = data.conversion_rates.INR;
+                    exchangeRates.EUR = data.conversion_rates.EUR;
+                    exchangeRates.TRY = data.conversion_rates.TRY;
+                    exchangeRates.SKK = data.conversion_rates.EUR * 26.5; // Approx Slovak conversion logic
+
+                    alert('Exchange rates updated!');
+                    renderPrices();
+                } else {
+                    alert('Failed to fetch exchange rates.');
+                }
+            } catch (error) {
+                alert('Error fetching exchange rates.');
+                console.error(error);
+            }
+        }
 
         function switchTab(tab) {
             document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
             document.getElementById(`tab${tab}`).classList.add('active');
-            const subtitle = tab === '1200' ? translations[language].subtitle1200 :
-                             tab === '1700' ? translations[language].subtitle1700 :
-                             translations[language].subtitle2700;
-            document.getElementById('subtitle').textContent = subtitle;
+            currentTab = tab;
+
+            document.getElementById('subtitle').textContent = 
+                tab === '1200' ? 'Each account purchased will contain 1200 coins' :
+                tab === '1700' ? 'Each account purchased will contain 1700 coins' :
+                'Coming Soon';
+
+            renderPrices();
         }
 
-        function showInstructions() {
-            document.getElementById('pricesContainer').style.display = 'none';
-            document.getElementById('instructionsContainer').style.display = 'block';
-        }
-
-        function translateContent() {
-            const language = document.getElementById('languageSelect').value;
-            document.getElementById('title').textContent = translations[language].title;
-            document.getElementById('instructionsTitle').textContent = translations[language].instructionsTitle;
-            document.getElementById('instruction1').textContent = translations[language].instruction1;
-            document.getElementById('instruction2').textContent = translations[language].instruction2;
-            document.getElementById('instruction3').textContent = translations[language].instruction3;
-            document.getElementById('contactInfo').textContent = translations[language].contactInfo;
-            switchTab(currentTab);
-        }
-
-        translateContent();
+        renderPrices();
     </script>
 </body>
 </html>
