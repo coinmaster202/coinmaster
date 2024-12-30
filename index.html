@@ -102,11 +102,10 @@
                 <option value="de">German</option>
                 <option value="tr">Turkish</option>
                 <option value="sk">Slovak</option>
-                <option value="hi">Hindi</option>
             </select>
         </div>
 
-        <h1>Account Pricing in Different Currencies</h1>
+        <h1 id="title">Account Pricing in Different Currencies</h1>
         <h2 id="subtitle">Each account purchased will contain 1200 coins</h2>
 
         <div class="tabs">
@@ -120,6 +119,27 @@
     </div>
 
     <script>
+        const translations = {
+            en: {
+                title: "Account Pricing in Different Currencies",
+                subtitle1200: "Each account purchased will contain 1200 coins",
+                subtitle1700: "Each account purchased will contain 1700 coins",
+                subtitle2700: "Coming Soon"
+            },
+            tr: {
+                title: "Farklı Para Birimlerinde Hesap Fiyatlandırması",
+                subtitle1200: "Satın alınan her hesap 1200 jeton içerir",
+                subtitle1700: "Satın alınan her hesap 1700 jeton içerir",
+                subtitle2700: "Çok Yakında"
+            },
+            sk: {
+                title: "Cenová ponuka účtov v rôznych menách",
+                subtitle1200: "Každý zakúpený účet obsahuje 1200 mincí",
+                subtitle1700: "Každý zakúpený účet obsahuje 1700 mincí",
+                subtitle2700: "Čoskoro"
+            }
+        };
+
         const prices1200 = {
             "1 account": 1,
             "10 accounts": 8,
@@ -148,7 +168,7 @@
             "120 accounts": 240
         };
 
-        let exchangeRates = { USD: 1.36, INR: 101.5, EUR: 1.17, TRY: 20.5, SKK: 26.5 }; // Example rates
+        let exchangeRates = { USD: 1.36, INR: 101.5, EUR: 1.17, TRY: 20.5 }; // Example rates
         let currentTab = '1200';
 
         function renderPrices() {
@@ -163,7 +183,6 @@
                     const priceINR = (priceGBP * exchangeRates.INR).toFixed(2);
                     const priceEUR = (priceGBP * exchangeRates.EUR).toFixed(2);
                     const priceTRY = (priceGBP * exchangeRates.TRY).toFixed(2);
-                    const priceSKK = (priceGBP * exchangeRates.SKK).toFixed(2);
 
                     pricesDiv.innerHTML += `
                         <div class="price-item">
@@ -172,8 +191,7 @@
                             <span class="currency">$${priceUSD}</span> | 
                             <span class="currency">₹${priceINR}</span> | 
                             <span class="currency">€${priceEUR}</span> |
-                            <span class="currency">₺${priceTRY}</span> |
-                            <span class="currency">${priceSKK} SKK</span>
+                            <span class="currency">₺${priceTRY}</span>
                         </div>`;
                 }
             } else if (currentTab === '2700') {
@@ -191,7 +209,6 @@
                     exchangeRates.INR = data.conversion_rates.INR;
                     exchangeRates.EUR = data.conversion_rates.EUR;
                     exchangeRates.TRY = data.conversion_rates.TRY;
-                    exchangeRates.SKK = data.conversion_rates.EUR * 26.5; // Approx Slovak conversion logic
 
                     alert('Exchange rates updated!');
                     renderPrices();
@@ -209,13 +226,23 @@
             document.getElementById(`tab${tab}`).classList.add('active');
             currentTab = tab;
 
+            const language = document.getElementById('languageSelect').value;
+            const translation = translations[language];
             document.getElementById('subtitle').textContent = 
-                tab === '1200' ? 'Each account purchased will contain 1200 coins' :
-                tab === '1700' ? 'Each account purchased will contain 1700 coins' :
-                'Coming Soon';
+                tab === '1200' ? translation.subtitle1200 :
+                tab === '1700' ? translation.subtitle1700 :
+                translation.subtitle2700;
 
             renderPrices();
         }
+
+        document.getElementById('languageSelect').addEventListener('change', () => {
+            const language = document.getElementById('languageSelect').value;
+            const translation = translations[language];
+            document.getElementById('title').textContent = translation.title;
+
+            switchTab(currentTab);
+        });
 
         renderPrices();
     </script>
