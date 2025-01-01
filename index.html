@@ -240,27 +240,37 @@
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
         }
 
+        /* Contact Us Button */
+        .contact-us-btn {
+            background-color: #db4437;  /* Red button */
+            color: white;
+            padding: 14px 24px;
+            border-radius: 6px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            margin-top: 20px;
+            display: block;
+            width: 100%;
+            text-align: center;
+            transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .contact-us-btn:hover {
+            background-color: #c1351d;  /* Darker red on hover */
+            transform: scale(1.05);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
         /* Responsive Styles */
         @media (max-width: 768px) {
             h1 {
                 font-size: 2.2rem;
             }
 
-            h2 {
-                font-size: 1.1rem;
-            }
-
-            .tabs {
-                flex-direction: column;
-                gap: 15px;
-            }
-
-            .cta-button {
-                width: 100%;
-                padding: 18px 0;
+            .price-card {
+                padding: 20px;
             }
         }
-
     </style>
 </head>
 <body>
@@ -286,6 +296,7 @@
         </div>
 
         <button id="refreshRates" class="refresh-btn" onclick="refreshExchangeRates()" disabled>Refresh Exchange Rates</button>
+        <button class="contact-us-btn" onclick="openModal()">Contact Us</button>
     </div>
 
     <div class="contact-modal" id="contactModal">
