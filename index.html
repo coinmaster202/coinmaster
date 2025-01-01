@@ -73,6 +73,11 @@
             border-radius: 5px;
             font-size: 16px;
             cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #refreshButton:hover {
+            background-color: #2c8f47;
         }
 
         .translation-container {
@@ -88,6 +93,96 @@
             border: 1px solid #d2e3fc;
             border-radius: 5px;
             font-size: 14px;
+        }
+
+        #contactUs {
+            margin-top: 20px;
+            padding: 12px 30px;
+            background-color: #fbbc05;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #contactUs:hover {
+            background-color: #e0a403;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 400px;
+            text-align: left;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            animation: slideDown 0.3s ease;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .close {
+            cursor: pointer;
+            font-size: 18px;
+            color: #999;
+        }
+
+        .close:hover {
+            color: #000;
+        }
+
+        input[type="text"], input[type="email"], textarea {
+            width: calc(100% - 20px);
+            margin: 10px 0;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        button[type="submit"] {
+            padding: 10px 20px;
+            background-color: #4285f4;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #3367d6;
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
         }
     </style>
 </head>
@@ -109,11 +204,32 @@
             <div class="tab active" id="tab1200" onclick="switchTab('1200')">1200 Coins</div>
             <div class="tab" id="tab1700" onclick="switchTab('1700')">1700 Coins</div>
             <div class="tab" id="tab2700" onclick="switchTab('2700')">2700 Coins</div>
-            <div class="tab" id="tabInstructions" onclick="switchTab('Instructions')">Instructions</div>
         </div>
 
         <div id="prices"></div>
         <button id="refreshButton" onclick="fetchExchangeRates()">Refresh Exchange Rates</button>
+        <button id="contactUs" onclick="openModal()">Contact Us</button>
+    </div>
+
+    <div class="modal" id="contactModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Contact Us</h3>
+                <span class="close" onclick="closeModal()">&times;</span>
+            </div>
+            <form id="contactForm" action="https://formspree.io/f/xwpprylr" method="POST">
+                <label for="name">Your name:</label>
+                <input type="text" id="name" name="name" placeholder="Enter your name" required><br>
+
+                <label for="email">Your email:</label>
+                <input type="email" id="email" name="email" placeholder="Enter your email" required><br>
+
+                <label for="message">Your message:</label>
+                <textarea id="message" name="message" placeholder="Enter your message" rows="4" required></textarea><br>
+
+                <button type="submit">Send</button>
+            </form>
+        </div>
     </div>
 
     <script>
@@ -122,22 +238,19 @@
                 title: "Account Pricing in Different Currencies",
                 subtitle1200: "Each account purchased will contain 1200 coins",
                 subtitle1700: "Each account purchased will contain 1700 coins",
-                subtitle2700: "Coming Soon",
-                instructions: "To make a purchase or for assistance, contact us at support@haakishop.co.uk."
+                subtitle2700: "Coming Soon"
             },
             tr: {
                 title: "Farklı Para Birimlerinde Hesap Fiyatlandırması",
                 subtitle1200: "Satın alınan her hesap 1200 jeton içerir",
                 subtitle1700: "Satın alınan her hesap 1700 jeton içerir",
-                subtitle2700: "Çok Yakında",
-                instructions: "Satın alma veya yardım için bize support@haakishop.co.uk adresinden ulaşabilirsiniz."
+                subtitle2700: "Çok Yakında"
             },
             sk: {
                 title: "Cenová ponuka účtov v rôznych menách",
                 subtitle1200: "Každý zakúpený účet obsahuje 1200 mincí",
                 subtitle1700: "Každý zakúpený účet obsahuje 1700 mincí",
-                subtitle2700: "Čoskoro",
-                instructions: "Pre nákup alebo pomoc nás kontaktujte na support@haakishop.co.uk."
+                subtitle2700: "Čoskoro"
             }
         };
 
@@ -174,13 +287,6 @@
 
             if (currentTab === '2700') {
                 pricesDiv.innerHTML = '<h3>Coming Soon</h3>';
-                return;
-            }
-
-            if (currentTab === 'Instructions') {
-                const language = document.getElementById('languageSelect').value;
-                const translation = translations[language];
-                pricesDiv.innerHTML = `<p>${translation.instructions}</p>`;
                 return;
             }
 
@@ -249,6 +355,14 @@
 
             switchTab(currentTab);
         });
+
+        function openModal() {
+            document.getElementById('contactModal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('contactModal').style.display = 'none';
+        }
 
         renderPrices();
     </script>
