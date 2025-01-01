@@ -4,63 +4,70 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Haaki Shop Premium</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <style>
-        /* Basic reset */
+        /* Global styles */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
+
         body {
-            font-family: 'Roboto', sans-serif;
-            background-color: #121212;
-            color: #ffffff;
+            font-family: 'Poppins', sans-serif;
+            background-color: #181818;  /* Dark background */
+            color: #fff;
             line-height: 1.6;
-            overflow-x: hidden;
             padding: 0;
+            overflow-x: hidden;
         }
 
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 30px;
-            background-color: #1f1f1f;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            background-color: #232323;  /* Lighter dark background */
+            border-radius: 20px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
             position: relative;
         }
 
-        /* Header */
         h1 {
-            font-size: 2.5rem;
-            color: #f5f5f5;
-            margin-bottom: 10px;
+            font-size: 3rem;
+            color: #fff;
+            margin-bottom: 20px;
+            text-align: center;
         }
 
         h2 {
             font-size: 1.2rem;
-            color: #dcdcdc;
-            margin-bottom: 30px;
+            color: #ccc;
+            margin-bottom: 40px;
+            text-align: center;
         }
 
         /* Tabs */
         .tabs {
             display: flex;
             justify-content: center;
-            margin-bottom: 30px;
+            margin-bottom: 40px;
         }
 
         .tab {
             padding: 15px 30px;
             margin: 0 10px;
-            background-color: #333;
-            border-radius: 8px;
+            background-color: #444;  /* Dark tab color */
+            border-radius: 50px;
             cursor: pointer;
-            font-weight: bold;
-            transition: all 0.3s ease;
-            font-size: 1rem;
-            color: #aaa;
+            font-size: 1.1rem;
+            color: #ccc;
+            transition: background-color 0.3s ease, transform 0.3s ease, color 0.3s ease;
+        }
+
+        .tab:hover {
+            background-color: #4285f4;  /* Hover color for tab */
+            color: #fff;
+            transform: scale(1.1);
         }
 
         .tab.active {
@@ -68,57 +75,60 @@
             color: #fff;
         }
 
-        /* Pricing cards */
+        /* Pricing Cards */
         .pricing-section {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 20px;
             justify-content: center;
         }
 
         .price-card {
-            background-color: #2c2c2c;
-            padding: 25px;
-            border-radius: 10px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            background-color: #2c2c2c;  /* Dark card background */
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
             text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
         }
 
         .price-card:hover {
             transform: translateY(-10px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+            background-color: #333;  /* Lighter card on hover */
         }
 
-        .price-card .price-title {
-            font-size: 1.5rem;
+        .price-title {
+            font-size: 1.6rem;
+            color: #fff;
             margin-bottom: 15px;
-            color: #f5f5f5;
         }
 
-        .price-card .price-value {
-            font-size: 1.2rem;
-            margin-bottom: 20px;
+        .price-value {
+            font-size: 1.4rem;
+            margin-bottom: 25px;
             color: #f1f1f1;
         }
 
-        .price-card .currency {
+        .currency {
             color: #4285f4;
         }
 
         .cta-button {
-            background-color: #34a853;
+            background-color: #34a853;  /* Green button */
             color: white;
-            padding: 12px 20px;
+            padding: 14px 24px;
             border-radius: 6px;
-            font-size: 1rem;
+            font-size: 1.1rem;
             cursor: pointer;
-            transition: background-color 0.3s ease;
             text-decoration: none;
+            transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
         }
 
         .cta-button:hover {
-            background-color: #2c8f47;
+            background-color: #2c8f47;  /* Darker green on hover */
+            transform: scale(1.05);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
         }
 
         /* Contact Modal */
@@ -129,18 +139,18 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.6);
+            background-color: rgba(0, 0, 0, 0.7);
             justify-content: center;
             align-items: center;
         }
 
         .modal-content {
             background-color: #333;
-            padding: 30px;
-            border-radius: 10px;
+            padding: 40px;
+            border-radius: 20px;
             width: 90%;
-            max-width: 500px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            max-width: 600px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
         }
 
         .modal-header {
@@ -151,7 +161,7 @@
 
         .close-btn {
             cursor: pointer;
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             color: #ccc;
         }
 
@@ -162,89 +172,104 @@
         .contact-form input,
         .contact-form textarea {
             width: 100%;
-            padding: 12px;
-            margin-bottom: 15px;
+            padding: 14px;
+            margin-bottom: 20px;
             border: 1px solid #555;
             border-radius: 8px;
             background-color: #1e1e1e;
             color: #ccc;
-            font-size: 1rem;
+            font-size: 1.1rem;
         }
 
         .contact-form button {
-            padding: 12px 25px;
-            background-color: #4285f4;
+            padding: 14px 30px;
+            background-color: #4285f4;  /* Blue button */
             color: white;
             border: none;
             border-radius: 6px;
-            font-size: 1rem;
+            font-size: 1.1rem;
             cursor: pointer;
-            transition: background-color 0.3s ease;
+            transition: background-color 0.3s ease, transform 0.3s ease;
         }
 
         .contact-form button:hover {
-            background-color: #3367d6;
+            background-color: #3367d6;  /* Darker blue on hover */
+            transform: scale(1.05);
         }
 
         /* Language Selector */
         .language-selector {
             position: absolute;
-            top: 20px;
-            right: 20px;
+            top: 30px;
+            right: 30px;
         }
 
         .language-selector select {
-            padding: 8px;
+            padding: 10px;
             font-size: 1rem;
             background-color: #333;
             color: #fff;
-            border-radius: 5px;
+            border-radius: 8px;
             border: none;
             cursor: pointer;
-        }
-
-        /* Loading Screen */
-        .loading-screen {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.8);
-            color: #fff;
-            justify-content: center;
-            align-items: center;
-            font-size: 2rem;
-            font-weight: bold;
-        }
-
-        /* Currency Refresh Button */
-        .refresh-button {
-            background-color: #ff9f00;
-            color: white;
-            padding: 12px 20px;
-            border-radius: 6px;
-            font-size: 1rem;
-            cursor: pointer;
             transition: background-color 0.3s ease;
-            margin-top: 20px;
         }
 
-        .refresh-button:disabled {
-            background-color: #ddd;
-            cursor: not-allowed;
+        .language-selector select:hover {
+            background-color: #444;
         }
+
+        /* Refresh Button */
+        .refresh-btn {
+            background-color: #fbbc05;  /* Yellow button */
+            color: white;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            margin-top: 20px;
+            display: block;
+            width: 100%;
+            text-align: center;
+            transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .refresh-btn:hover {
+            background-color: #d99a05;  /* Darker yellow on hover */
+            transform: scale(1.05);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.2rem;
+            }
+
+            h2 {
+                font-size: 1.1rem;
+            }
+
+            .tabs {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .cta-button {
+                width: 100%;
+                padding: 18px 0;
+            }
+        }
+
     </style>
 </head>
 <body>
     <div class="container">
         <div class="language-selector">
-            <label for="languageSelect" style="font-size: 14px; color: #ccc;">Language:</label>
             <select id="languageSelect">
-                <option value="en" selected>English</option>
-                <option value="tr">Turkish</option>
-                <option value="sk">Slovak</option>
+                <option value="en">English</option>
+                <option value="tr">Türkçe</option>
+                <option value="sk">Slovensky</option>
             </select>
         </div>
 
@@ -252,21 +277,16 @@
         <h2 id="subtitle">Each account purchased will contain 1200 coins</h2>
 
         <div class="tabs">
-            <div class="tab active" id="tab1200" onclick="switchTab('1200')">1200 Coins</div>
-            <div class="tab" id="tab1700" onclick="switchTab('1700')">1700 Coins</div>
-            <div class="tab" id="tab2700" onclick="switchTab('2700')">2700 Coins</div>
+            <div id="tab1200" class="tab active" onclick="switchTab('1200')">1200 Coins</div>
+            <div id="tab1700" class="tab" onclick="switchTab('1700')">1700 Coins</div>
         </div>
 
-        <div class="pricing-section" id="prices"></div>
+        <div id="prices" class="pricing-section">
+            <!-- Pricing cards will be dynamically inserted here -->
+        </div>
 
-        <a href="javascript:void(0)" class="cta-button" onclick="openModal()">Contact Us</a>
-
-        <!-- Currency Refresh Button -->
-        <button class="refresh-button" id="refreshCurrencyButton" onclick="refreshCurrency()">Refresh Currency</button>
+        <button id="refreshRates" class="refresh-btn" onclick="refreshExchangeRates()" disabled>Refresh Exchange Rates</button>
     </div>
-
-    <!-- Loading Screen -->
-    <div class="loading-screen" id="loadingScreen">Processing... Please wait...</div>
 
     <div class="contact-modal" id="contactModal">
         <div class="modal-content">
@@ -288,20 +308,17 @@
             en: {
                 title: "Account Pricing in Different Currencies",
                 subtitle1200: "Each account purchased will contain 1200 coins",
-                subtitle1700: "Each account purchased will contain 1700 coins",
-                subtitle2700: "Coming Soon"
+                subtitle1700: "Each account purchased will contain 1700 coins"
             },
             tr: {
                 title: "Farklı Para Birimlerinde Hesap Fiyatlandırması",
                 subtitle1200: "Satın alınan her hesap 1200 jeton içerir",
-                subtitle1700: "Satın alınan her hesap 1700 jeton içerir",
-                subtitle2700: "Çok Yakında"
+                subtitle1700: "Satın alınan her hesap 1700 jeton içerir"
             },
             sk: {
                 title: "Cenová ponuka účtov v rôznych menách",
                 subtitle1200: "Každý zakúpený účet obsahuje 1200 mincí",
-                subtitle1700: "Každý zakúpený účet obsahuje 1700 mincí",
-                subtitle2700: "Čoskoro"
+                subtitle1700: "Každý zakúpený účet obsahuje 1700 mincí"
             }
         };
 
@@ -323,8 +340,7 @@
 
         let exchangeRates = { USD: 1.36, INR: 101.5, EUR: 1.17, TRY: 20.5 }; // Example rates
         let currentTab = '1200';
-
-        let currencyRefreshTimeout = null;
+        let ratesRefreshed = false;
 
         function renderPrices() {
             const pricesDiv = document.getElementById('prices');
@@ -347,27 +363,19 @@
                             <span class="currency">€${priceEUR}</span> | 
                             <span class="currency">₺${priceTRY}</span>
                         </div>
-                        <a href="javascript:void(0)" class="cta-button" onclick="buyNow()">Buy Now</a>
-                    </div>
-                `;
+                        <a href="javascript:void(0)" class="cta-button">Buy Now</a>
+                    </div>`;
             }
         }
 
         function switchTab(tab) {
             currentTab = tab;
-            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-            document.getElementById(`tab${tab}`).classList.add('active');
+            document.getElementById('title').textContent = translations[document.getElementById('languageSelect').value].title;
             document.getElementById('subtitle').textContent = translations[document.getElementById('languageSelect').value][`subtitle${tab}`];
+            
+            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+            document.getElementById(`tab${tab}`).classList.add('active');
             renderPrices();
-        }
-
-        function buyNow() {
-            document.getElementById('loadingScreen').style.display = 'flex';
-
-            setTimeout(() => {
-                document.getElementById('loadingScreen').style.display = 'none';
-                alert("Contact support@haakishop.co.uk for any issues.");
-            }, 2000);
         }
 
         function openModal() {
@@ -378,20 +386,32 @@
             document.getElementById('contactModal').style.display = 'none';
         }
 
-        function refreshCurrency() {
-            // Simulate refreshing the currency
-            alert("Currencies refreshed successfully!");
-
-            // Disable the button for 5 minutes
-            document.getElementById('refreshCurrencyButton').disabled = true;
-
-            setTimeout(() => {
-                document.getElementById('refreshCurrencyButton').disabled = false;
-            }, 5 * 60 * 1000);  // Disable for 5 minutes
+        async function refreshExchangeRates() {
+            if (!ratesRefreshed) {
+                try {
+                    const response = await fetch('https://v6.exchangerate-api.com/v6/e813144600ef51f4b5f66258/latest/GBP');
+                    const data = await response.json();
+                    if (data.result === "success") {
+                        exchangeRates = data.conversion_rates;
+                        ratesRefreshed = true;
+                        document.getElementById('refreshRates').disabled = true;
+                        renderPrices();
+                    } else {
+                        console.error('Error fetching exchange rates:', data.error);
+                    }
+                } catch (error) {
+                    console.error('API call error:', error);
+                }
+            }
         }
 
-        // Initialize
-        renderPrices();
+        // Event listeners
+        document.getElementById('languageSelect').addEventListener('change', (e) => {
+            switchTab(currentTab); // Re-render the tab with the new language
+        });
+
+        // Initial render
+        switchTab('1200');
     </script>
 </body>
 </html>
