@@ -3,296 +3,138 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Haaki Shop Premium</title>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <title>Departure Message</title>
   <style>
-    /* Global styles */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
     body {
-      font-family: 'Poppins', sans-serif;
-      background-color: #1a1a2e;
+      background: radial-gradient(circle, #000000, #1b1b1b);
       color: #ffffff;
-      line-height: 1.6;
-      overflow-x: hidden;
-    }
-
-    .container {
-      max-width: 1200px;
-      margin: 20px auto;
-      padding: 40px;
-      background: linear-gradient(135deg, #24243e, #302b63, #0f0c29);
-      border-radius: 20px;
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+      font-family: 'Arial', sans-serif;
+      text-align: center;
+      padding: 50px;
+      margin: 0;
+      transition: background 1s, color 1s;
     }
 
     h1 {
       font-size: 3rem;
-      text-align: center;
-      margin-bottom: 20px;
-      color: #ffffff;
-      text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4);
+      text-shadow: 0 0 20px #ff0000, 0 0 40px #ff0000;
+      animation: pulse 2s infinite;
     }
 
-    h2 {
-      font-size: 1.2rem;
-      text-align: center;
-      margin-bottom: 40px;
-      color: #d1d1d1;
-    }
-
-    .tabs {
-      display: flex;
-      justify-content: center;
-      margin-bottom: 40px;
-    }
-
-    .tab {
-      padding: 15px 30px;
-      margin: 0 10px;
-      background-color: #3a3a6d;
-      border-radius: 50px;
-      cursor: pointer;
-      font-size: 1.1rem;
-      color: #e0e0e0;
-      transition: background-color 0.3s ease, transform 0.3s ease, color 0.3s ease;
-    }
-
-    .tab:hover {
-      background-color: #5c5cad;
-      color: #ffffff;
-      transform: scale(1.1);
-    }
-
-    .tab.active {
-      background-color: #5c5cad;
-      color: #ffffff;
-    }
-
-    .pricing-section {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 20px;
-    }
-
-    .price-card {
-      background-color: #2a2a4d;
-      padding: 20px;
-      border-radius: 15px;
-      text-align: center;
-      transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
-    }
-
-    .price-card:hover {
-      transform: translateY(-10px);
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-      background-color: #333366;
-    }
-
-    .price-title {
+    p {
       font-size: 1.5rem;
-      margin-bottom: 10px;
-      color: #ffffff;
-    }
-
-    .price-value {
-      font-size: 1.2rem;
-      margin-bottom: 10px;
-      color: #f1f1f1;
-    }
-
-    .dropdown {
+      color: #bbbbbb;
       margin: 20px 0;
-      position: relative;
     }
 
-    .dropdown select {
-      padding: 10px;
-      font-size: 1rem;
-      border-radius: 6px;
-      background-color: #4285f4;
-      color: white;
+    a {
+      color: #00ffcc;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .smiley {
+      font-size: 5rem;
+      margin: 50px auto;
+      animation: swing 2s infinite ease-in-out;
+      transition: color 1s;
+    }
+
+    .button {
+      background: #00ffcc;
+      color: #000;
+      font-size: 1.2rem;
       border: none;
-      cursor: pointer;
-    }
-
-    .contact-us-btn, .exchange-rates-btn {
-      background-color: #e74c3c;
-      color: white;
-      padding: 14px 24px;
-      border-radius: 6px;
-      text-align: center;
-      font-size: 1.1rem;
-      margin-top: 20px;
-      display: block;
-      cursor: pointer;
-      transition: background-color 0.3s ease, transform 0.3s ease;
-    }
-
-    .contact-us-btn:hover, .exchange-rates-btn:hover {
-      background-color: #c0392b;
-      transform: scale(1.05);
-    }
-
-    .modal {
-      display: none;
-      position: fixed;
-      z-index: 1000;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      overflow: auto;
-      background-color: rgba(0, 0, 0, 0.7);
-      justify-content: center;
-      align-items: center;
-    }
-
-    .modal-content {
-      background-color: #1a1a2e;
-      padding: 20px;
-      border-radius: 10px;
-      text-align: center;
-      width: 80%;
-      max-width: 500px;
-      color: #ffffff;
-    }
-
-    .modal-content h3 {
-      margin-bottom: 20px;
-    }
-
-    .close-btn {
-      background-color: #e74c3c;
-      color: white;
       padding: 10px 20px;
-      border-radius: 6px;
       cursor: pointer;
-      font-size: 1rem;
       margin-top: 20px;
+      border-radius: 5px;
+      transition: background 0.3s, color 0.3s;
     }
 
-    .close-btn:hover {
-      background-color: #c0392b;
+    .button:hover {
+      background: #009999;
+      color: #fff;
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        text-shadow: 0 0 20px #ff0000, 0 0 40px #ff0000;
+      }
+      50% {
+        text-shadow: 0 0 40px #ff3333, 0 0 60px #ff3333;
+      }
+    }
+
+    @keyframes swing {
+      0%, 100% {
+        transform: rotate(-10deg);
+      }
+      50% {
+        transform: rotate(10deg);
+      }
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="dropdown">
-      <label for="language">Choose Language: </label>
-      <select id="language" onchange="translatePage()">
-        <option value="en">English</option>
-        <option value="tr">Türkçe</option>
-        <option value="sk">Slovak</option>
-        <option value="es">Español</option>
-        <!-- Add more languages as needed -->
-      </select>
-    </div>
-
-    <h1 id="title">Account Pricing in Different Currencies</h1>
-    <h2 id="subtitle">Choose your package and view conversion rates below</h2>
-
-    <div class="tabs">
-      <div id="tab1200" class="tab active" onclick="switchTab('1200')">1200 Coins</div>
-      <div id="tab1700" class="tab" onclick="switchTab('1700')">1700 Coins</div>
-      <div id="tabInstructions" class="tab" onclick="switchTab('Instructions')">Instructions</div>
-    </div>
-
-    <!-- Pricing Section -->
-    <div id="prices" class="pricing-section"></div>
-
-    <!-- Instructions Section -->
-    <div id="instructions" class="instructions" style="display:none;">
-      <h2>How to Buy Accounts</h2>
-      <p>To purchase accounts, please follow these steps:</p>
-      <ol>
-        <li>Click on the <strong>"Contact Us"</strong> button below.</li>
-        <li>Fill out the form with the required details.</li>
-        <li>Our support team will get back to you with the payment details and confirmation.</li>
-      </ol>
-      <p>If you have any questions, feel free to contact us at <strong>support@haakishop.com</strong>.</p>
-    </div>
-
-    <button class="exchange-rates-btn" onclick="showExchangeRates()">View Exchange Rates</button>
-    <button class="contact-us-btn" onclick="openContactUs()">Contact Us</button>
-  </div>
-
-  <!-- Exchange Rates Modal -->
-  <div id="exchangeRatesModal" class="modal">
-    <div class="modal-content">
-      <h3>Currency Exchange Rates</h3>
-      <p>USD: 1.36</p>
-      <p>INR: 101.5</p>
-      <p>EUR: 1.17</p>
-      <p>TRY: 20.5</p>
-      <button class="close-btn" onclick="closeExchangeRates()">Close</button>
-    </div>
-  </div>
+  <h1 id="message-title">I’ll Be Back to Rule the Galaxy...</h1>
+  <div class="smiley" id="smiley">😈</div>
+  <p id="message-text">
+    This isn’t the end—just a momentary retreat to gather our strength and prepare for something even more powerful.  
+    <br><br>
+    The Force remains strong, and when we return, you’ll witness the full might of what we’ve been working on.
+  </p>
+  <p id="cta-text">
+    <strong>Until then, the Dark Side awaits your loyalty. Follow our journey <a href="#">here</a> and stay vigilant.</strong>
+  </p>
+  <button class="button" id="switch-button" onclick="switchToLightSide()">Take Me to the Light Side</button>
 
   <script>
-    let currentTab = '1200';
-    const exchangeRates = { USD: 1.36, INR: 101.5, EUR: 1.17, TRY: 20.5 };
-    const translations = {
-      en: { title: "Account Pricing in Different Currencies", subtitle: "Choose your package and view conversion rates below" },
-      tr: { title: "Farklı Para Birimlerinde Hesap Fiyatlandırması", subtitle: "Paketinizi seçin ve döviz kurlarını aşağıda görün" },
-      sk: { title: "Cenové ponuky účtov v rôznych menách", subtitle: "Vyberte si balíček a pozrite si kurzy nižšie" },
-      es: { title: "Precios de cuentas en diferentes monedas", subtitle: "Elige tu paquete y consulta las tasas de cambio a continuación" }
-    };
+    function switchToLightSide() {
+      // Change background and text colors for the Light Side
+      document.body.style.background = "radial-gradient(circle, #000040, #001b80)";
+      document.body.style.color = "#ffffff";
 
-    const prices1200 = { "1 account": 1, "10 accounts": 8, "20 accounts": 17, "30 accounts": 23, "40 accounts": 30, "50 accounts": 37, "60 accounts": 42, "70 accounts": 49, "80 accounts": 56 };
-    const prices1700 = { "1 account": 2, "10 accounts": 15, "20 accounts": 28, "30 accounts": 42, "40 accounts": 55, "50 accounts": 70, "60 accounts": 85, "70 accounts": 95, "80 accounts": 110 };
+      // Update smiley to happy
+      const smiley = document.getElementById('smiley');
+      smiley.innerText = "😊";
+      smiley.style.color = "#00ffff";
 
-    function switchTab(tab) {
-      currentTab = tab;
-      document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
-      document.getElementById(`tab${tab}`).classList.add('active');
-      document.getElementById('prices').style.display = tab === 'Instructions' ? 'none' : 'grid';
-      document.getElementById('instructions').style.display = tab === 'Instructions' ? 'block' : 'none';
-      if (tab !== 'Instructions') renderPrices();
+      // Update the message for the Light Side
+      document.getElementById('message-title').innerText = "May the Force Be With You...";
+      document.getElementById('message-text').innerText = 
+        "The Light Side of the Force calls to you. A path of hope, balance, and a brighter tomorrow awaits.";
+      document.getElementById('cta-text').innerHTML = 
+        "<strong>Stay on this path and bring balance to the Force. Follow our journey <a href='#'>here</a> and shine brightly.</strong>";
+
+      // Change button to switch back to Dark Side
+      const button = document.getElementById('switch-button');
+      button.innerText = "Take Me Back to the Dark Side";
+      button.setAttribute("onclick", "switchToDarkSide()");
     }
 
-    function renderPrices() {
-      const pricesDiv = document.getElementById('prices');
-      pricesDiv.innerHTML = '';
-      const prices = currentTab === '1200' ? prices1200 : prices1700;
-      for (const [accountType, price] of Object.entries(prices)) {
-        const priceUSD = (price * exchangeRates.USD).toFixed(2);
-        const priceINR = (price * exchangeRates.INR).toFixed(2);
-        const priceEUR = (price * exchangeRates.EUR).toFixed(2);
-        const priceTRY = (price * exchangeRates.TRY).toFixed(2);
-        pricesDiv.innerHTML += `
-          <div class="price-card">
-            <div class="price-title">${accountType}</div>
-            <div class="price-value">£${price}</div>
-            <p>USD: $${priceUSD}, INR: ₹${priceINR}, EUR: €${priceEUR}, TRY: ₺${priceTRY}</p>
-          </div>`;
-      }
-    }
+    function switchToDarkSide() {
+      // Change background and text colors for the Dark Side
+      document.body.style.background = "radial-gradient(circle, #000000, #1b1b1b)";
+      document.body.style.color = "#ffffff";
 
-    function translatePage() {
-      const language = document.getElementById('language').value;
-      document.getElementById('title').textContent = translations[language].title;
-      document.getElementById('subtitle').textContent = translations[language].subtitle;
-    }
+      // Update smiley to evil
+      const smiley = document.getElementById('smiley');
+      smiley.innerText = "😈";
+      smiley.style.color = "#ff0000";
 
-    function showExchangeRates() {
-      document.getElementById('exchangeRatesModal').style.display = 'flex';
-    }
+      // Update the message for the Dark Side
+      document.getElementById('message-title').innerText = "I’ll Be Back to Rule the Galaxy...";
+      document.getElementById('message-text').innerText = 
+        "This isn’t the end—just a momentary retreat to gather our strength and prepare for something even more powerful.";
+      document.getElementById('cta-text').innerHTML = 
+        "<strong>Until then, the Dark Side awaits your loyalty. Follow our journey <a href='#'>here</a> and stay vigilant.</strong>";
 
-    function closeExchangeRates() {
-      document.getElementById('exchangeRatesModal').style.display = 'none';
+      // Change button to switch to Light Side
+      const button = document.getElementById('switch-button');
+      button.innerText = "Take Me to the Light Side";
+      button.setAttribute("onclick", "switchToLightSide()");
     }
-
-    function openContactUs() {
-      alert("Contact us at: support@haakishop.com");
-    }
-
-    switchTab('1200');
   </script>
 </body>
 </html>
