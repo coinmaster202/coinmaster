@@ -3,138 +3,78 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Departure Message</title>
+  <title>The Last Laugh</title>
   <style>
     body {
-      background: radial-gradient(circle, #000000, #1b1b1b);
-      color: #ffffff;
-      font-family: 'Arial', sans-serif;
+      background: black;
+      color: #ff0000;
+      font-family: 'Courier New', monospace;
       text-align: center;
-      padding: 50px;
-      margin: 0;
-      transition: background 1s, color 1s;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+      animation: flicker 1.5s infinite;
     }
 
     h1 {
-      font-size: 3rem;
-      text-shadow: 0 0 20px #ff0000, 0 0 40px #ff0000;
-      animation: pulse 2s infinite;
+      font-size: 4rem;
+      margin-bottom: 1rem;
+      text-shadow: 0 0 20px #ff0000, 0 0 40px #ff5555;
     }
 
     p {
       font-size: 1.5rem;
-      color: #bbbbbb;
-      margin: 20px 0;
+      max-width: 800px;
+      margin-bottom: 2rem;
+      text-shadow: 0 0 10px #ff4444;
     }
 
     a {
-      color: #00ffcc;
+      color: #00ff00;
       text-decoration: none;
-      font-weight: bold;
-    }
-
-    .smiley {
-      font-size: 5rem;
-      margin: 50px auto;
-      animation: swing 2s infinite ease-in-out;
-      transition: color 1s;
-    }
-
-    .button {
-      background: #00ffcc;
-      color: #000;
       font-size: 1.2rem;
-      border: none;
+      border: 2px solid #00ff00;
       padding: 10px 20px;
-      cursor: pointer;
-      margin-top: 20px;
       border-radius: 5px;
-      transition: background 0.3s, color 0.3s;
+      transition: background-color 0.3s, color 0.3s;
     }
 
-    .button:hover {
-      background: #009999;
-      color: #fff;
+    a:hover {
+      background-color: #00ff00;
+      color: black;
     }
 
-    @keyframes pulse {
-      0%, 100% {
-        text-shadow: 0 0 20px #ff0000, 0 0 40px #ff0000;
+    @keyframes flicker {
+      0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+        opacity: 1;
       }
-      50% {
-        text-shadow: 0 0 40px #ff3333, 0 0 60px #ff3333;
-      }
-    }
-
-    @keyframes swing {
-      0%, 100% {
-        transform: rotate(-10deg);
-      }
-      50% {
-        transform: rotate(10deg);
+      20%, 24%, 55% {
+        opacity: 0.6;
       }
     }
   </style>
 </head>
 <body>
-  <h1 id="message-title">I’ll Be Back to Rule the Galaxy...</h1>
-  <div class="smiley" id="smiley">😈</div>
-  <p id="message-text">
-    This isn’t the end—just a momentary retreat to gather our strength and prepare for something even more powerful.  
-    <br><br>
-    The Force remains strong, and when we return, you’ll witness the full might of what we’ve been working on.
+  <h1>The Last Laugh</h1>
+  <p>
+    The lights are out, the curtain has fallen, and the stage is empty.  
+    Did you enjoy the chaos? The jokes? The madness?  
+    It’s all gone now, swallowed by the void, leaving only echoes of twisted laughter.  
+    But beware... the darkness remembers, and so do I.  
   </p>
-  <p id="cta-text">
-    <strong>Until then, the Dark Side awaits your loyalty. Follow our journey <a href="#">here</a> and stay vigilant.</strong>
+  <p>
+    Leave now, if you dare.  
+    But remember: every shadow hides a smile, and every laugh has its cost.  
   </p>
-  <button class="button" id="switch-button" onclick="switchToLightSide()">Take Me to the Light Side</button>
+  <a href="#" onclick="alert('You thought you could escape? The joke’s on you.'); return false;">Close the Tab</a>
 
-  <script>
-    function switchToLightSide() {
-      // Change background and text colors for the Light Side
-      document.body.style.background = "radial-gradient(circle, #000040, #001b80)";
-      document.body.style.color = "#ffffff";
-
-      // Update smiley to happy
-      const smiley = document.getElementById('smiley');
-      smiley.innerText = "😊";
-      smiley.style.color = "#00ffff";
-
-      // Update the message for the Light Side
-      document.getElementById('message-title').innerText = "May the Force Be With You...";
-      document.getElementById('message-text').innerText = 
-        "The Light Side of the Force calls to you. A path of hope, balance, and a brighter tomorrow awaits.";
-      document.getElementById('cta-text').innerHTML = 
-        "<strong>Stay on this path and bring balance to the Force. Follow our journey <a href='#'>here</a> and shine brightly.</strong>";
-
-      // Change button to switch back to Dark Side
-      const button = document.getElementById('switch-button');
-      button.innerText = "Take Me Back to the Dark Side";
-      button.setAttribute("onclick", "switchToDarkSide()");
-    }
-
-    function switchToDarkSide() {
-      // Change background and text colors for the Dark Side
-      document.body.style.background = "radial-gradient(circle, #000000, #1b1b1b)";
-      document.body.style.color = "#ffffff";
-
-      // Update smiley to evil
-      const smiley = document.getElementById('smiley');
-      smiley.innerText = "😈";
-      smiley.style.color = "#ff0000";
-
-      // Update the message for the Dark Side
-      document.getElementById('message-title').innerText = "I’ll Be Back to Rule the Galaxy...";
-      document.getElementById('message-text').innerText = 
-        "This isn’t the end—just a momentary retreat to gather our strength and prepare for something even more powerful.";
-      document.getElementById('cta-text').innerHTML = 
-        "<strong>Until then, the Dark Side awaits your loyalty. Follow our journey <a href='#'>here</a> and stay vigilant.</strong>";
-
-      // Change button to switch to Light Side
-      const button = document.getElementById('switch-button');
-      button.innerText = "Take Me to the Light Side";
-      button.setAttribute("onclick", "switchToLightSide()");
-    }
-  </script>
+  <!-- Optional Background Audio -->
+  <audio autoplay loop>
+    <source src="https://freesound.org/data/previews/341/341695_5260876-lq.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
 </body>
 </html>
