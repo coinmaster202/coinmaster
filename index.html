@@ -32,17 +32,18 @@
       text-shadow: 0 0 10px #ff4444;
     }
 
-    a {
+    button {
       color: #00ff00;
-      text-decoration: none;
       font-size: 1.2rem;
       border: 2px solid #00ff00;
       padding: 10px 20px;
       border-radius: 5px;
+      background-color: black;
+      cursor: pointer;
       transition: background-color 0.3s, color 0.3s;
     }
 
-    a:hover {
+    button:hover {
       background-color: #00ff00;
       color: black;
     }
@@ -66,15 +67,18 @@
     But beware... the darkness remembers, and so do I.  
   </p>
   <p>
-    Leave now, if you dare.  
-    But remember: every shadow hides a smile, and every laugh has its cost.  
+    Click below to hear the last laugh... if you dare.
   </p>
-  <a href="#" onclick="alert('You thought you could escape? The joke’s on you.'); return false;">Close the Tab</a>
+  <button onclick="playAudio()">Hear the Laugh</button>
 
-  <!-- Optional Background Audio -->
-  <audio autoplay loop>
-    <source src="https://freesound.org/data/previews/341/341695_5260876-lq.mp3" type="audio/mpeg">
-    Your browser does not support the audio element.
-  </audio>
+  <!-- Working Background Audio -->
+  <audio id="evil-laugh" src="https://freesound.org/data/previews/341/341695_5260876-lq.mp3"></audio>
+
+  <script>
+    function playAudio() {
+      const audio = document.getElementById('evil-laugh');
+      audio.play().catch(error => console.error('Error playing audio:', error));
+    }
+  </script>
 </body>
 </html>
