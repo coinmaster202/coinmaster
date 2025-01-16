@@ -20,21 +20,21 @@
     }
 
     h1 {
-      font-size: 4rem;
+      font-size: 3rem;
       margin-bottom: 1rem;
       text-shadow: 0 0 20px #ff0000, 0 0 40px #ff5555;
     }
 
     p {
-      font-size: 1.5rem;
-      max-width: 800px;
+      font-size: 1.2rem;
+      max-width: 90%;
       margin-bottom: 2rem;
       text-shadow: 0 0 10px #ff4444;
     }
 
     button {
       color: #00ff00;
-      font-size: 1.2rem;
+      font-size: 1rem;
       border: 2px solid #00ff00;
       padding: 10px 20px;
       border-radius: 5px;
@@ -48,13 +48,19 @@
       color: black;
     }
 
-    @keyframes flicker {
-      0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
-        opacity: 1;
-      }
-      20%, 24%, 55% {
-        opacity: 0.6;
-      }
+    #exit-code {
+      display: none;
+      margin-top: 1rem;
+    }
+
+    input[type="password"] {
+      color: #00ff00;
+      background: black;
+      border: 2px solid #00ff00;
+      padding: 5px;
+      font-family: 'Courier New', monospace;
+      font-size: 1rem;
+      text-align: center;
     }
   </style>
 </head>
@@ -67,37 +73,70 @@
     But beware... the darkness remembers, and so do I.  
   </p>
   <p>
-    Click below to hear the last laugh... if you dare.
+    Tap below to hear the last laugh... if you dare.
   </p>
   <button onclick="startExperience()">Hear Me</button>
 
-  <!-- Working Background Audio -->
+  <!-- Hidden input for the exit code -->
+  <div id="exit-code">
+    <p>Enter the secret code to leave early:</p>
+    <input type="password" id="code-input" placeholder="Enter code">
+    <button onclick="checkCode()">Submit</button>
+  </div>
+
   <audio id="evil-laugh" src="https://freesound.org/data/previews/341/341695_5260876-lq.mp3"></audio>
 
   <script>
     function startExperience() {
       // Request fullscreen
-      if (document.documentElement.requestFullscreen) {
-        document.documentElement.requestFullscreen();
-      } else if (document.documentElement.mozRequestFullScreen) { // Firefox
-        document.documentElement.mozRequestFullScreen();
-      } else if (document.documentElement.webkitRequestFullscreen) { // Chrome, Safari
-        document.documentElement.webkitRequestFullscreen();
-      } else if (document.documentElement.msRequestFullscreen) { // IE/Edge
-        document.documentElement.msRequestFullscreen();
+      const doc = document.documentElement;
+      if (doc.requestFullscreen) {
+        doc.requestFullscreen();
+      } else if (doc.mozRequestFullScreen) { // Firefox
+        doc.mozRequestFullScreen();
+      } else if (doc.webkitRequestFullscreen) { // Chrome, Safari
+        doc.webkitRequestFullscreen();
+      } else if (doc.msRequestFullscreen) { // IE/Edge
+        doc.msRequestFullscreen();
+      }
+
+      // Lock orientation to portrait
+      if (screen.orientation && screen.orientation.lock) {
+        screen.orientation.lock("portrait").catch((err) => console.warn("Orientation lock failed:", err));
       }
 
       // Play audio
       const audio = document.getElementById('evil-laugh');
       audio.play().catch(error => console.error('Error playing audio:', error));
 
-      // Prevent closing for 10 minutes
-      const endTime = Date.now() + 10 * 60 * 1000; // 10 minutes in milliseconds
+      // Prevent closing or navigating away
+      const endTime = Date.now() + 10 * 60 * 1000; // 10 minutes
       window.onbeforeunload = function () {
         if (Date.now() < endTime) {
           return 'You cannot leave this page for 10 minutes!';
         }
       };
+
+      // Disable back button and navigation gestures
+      window.history.pushState(null, "", window.location.href);
+      window.addEventListener("popstate", function () {
+        window.history.pushState(null, "", window.location.href);
+        alert("You cannot go back during the experience!");
+      });
+
+      // Show the exit code input
+      document.getElementById('exit-code').style.display = 'block';
+    }
+
+    function checkCode() {
+      const codeInput = document.getElementById('code-input').value;
+      if (codeInput === '2004') {
+        alert("You entered the correct code. The experience will now end.");
+        window.onbeforeunload = null; // Remove the unload restriction
+        document.exitFullscreen(); // Exit fullscreen if applicable
+      } else {
+        alert("Incorrect code. You cannot leave yet!");
+      }
     }
   </script>
 </body>
