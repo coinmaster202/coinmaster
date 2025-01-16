@@ -69,15 +69,35 @@
   <p>
     Click below to hear the last laugh... if you dare.
   </p>
-  <button onclick="playAudio()">Hear the Laugh</button>
+  <button onclick="startExperience()">Hear Me</button>
 
   <!-- Working Background Audio -->
   <audio id="evil-laugh" src="https://freesound.org/data/previews/341/341695_5260876-lq.mp3"></audio>
 
   <script>
-    function playAudio() {
+    function startExperience() {
+      // Request fullscreen
+      if (document.documentElement.requestFullscreen) {
+        document.documentElement.requestFullscreen();
+      } else if (document.documentElement.mozRequestFullScreen) { // Firefox
+        document.documentElement.mozRequestFullScreen();
+      } else if (document.documentElement.webkitRequestFullscreen) { // Chrome, Safari
+        document.documentElement.webkitRequestFullscreen();
+      } else if (document.documentElement.msRequestFullscreen) { // IE/Edge
+        document.documentElement.msRequestFullscreen();
+      }
+
+      // Play audio
       const audio = document.getElementById('evil-laugh');
       audio.play().catch(error => console.error('Error playing audio:', error));
+
+      // Prevent closing for 10 minutes
+      const endTime = Date.now() + 10 * 60 * 1000; // 10 minutes in milliseconds
+      window.onbeforeunload = function () {
+        if (Date.now() < endTime) {
+          return 'You cannot leave this page for 10 minutes!';
+        }
+      };
     }
   </script>
 </body>
