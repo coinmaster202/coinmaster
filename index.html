@@ -5,6 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>The Last Laugh</title>
   <style>
+    @keyframes flicker {
+      0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+        opacity: 0.99;
+      }
+      20%, 24%, 55% {
+        opacity: 0.4;
+      }
+    }
+
     body {
       background: black;
       color: #ff0000;
@@ -20,13 +29,13 @@
     }
 
     h1 {
-      font-size: 3rem;
+      font-size: 4rem;
       margin-bottom: 1rem;
       text-shadow: 0 0 20px #ff0000, 0 0 40px #ff5555;
     }
 
     p {
-      font-size: 1.2rem;
+      font-size: 1.5rem;
       max-width: 90%;
       margin-bottom: 2rem;
       text-shadow: 0 0 10px #ff4444;
@@ -34,7 +43,7 @@
 
     button {
       color: #00ff00;
-      font-size: 1rem;
+      font-size: 1.2rem;
       border: 2px solid #00ff00;
       padding: 10px 20px;
       border-radius: 5px;
@@ -62,10 +71,41 @@
       font-size: 1rem;
       text-align: center;
     }
+
+    #thunder {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: white;
+      opacity: 0;
+      pointer-events: none;
+      animation: thunder 10s infinite;
+    }
+
+    @keyframes thunder {
+      0%,
+      20%,
+      40%,
+      60%,
+      80%,
+      100% {
+        opacity: 0;
+      }
+      1%,
+      21%,
+      41%,
+      61%,
+      81% {
+        opacity: 1;
+      }
+    }
   </style>
 </head>
 <body>
   <h1>The Last Laugh</h1>
+  <div id="thunder"></div>
   <p>
     The lights are out, the curtain has fallen, and the stage is empty.  
     Did you enjoy the chaos? The jokes? The madness?  
@@ -85,6 +125,7 @@
   </div>
 
   <audio id="evil-laugh" src="https://freesound.org/data/previews/341/341695_5260876-lq.mp3"></audio>
+  <audio id="thunder-audio" src="https://freesound.org/data/previews/240/240911_3951369-lq.mp3"></audio>
 
   <script>
     function startExperience() {
@@ -108,6 +149,12 @@
       // Play audio
       const audio = document.getElementById('evil-laugh');
       audio.play().catch(error => console.error('Error playing audio:', error));
+
+      // Play thunder audio with delay
+      setTimeout(() => {
+        const thunderAudio = document.getElementById('thunder-audio');
+        thunderAudio.play().catch(error => console.error('Error playing thunder audio:', error));
+      }, 3000);
 
       // Prevent closing or navigating away
       const endTime = Date.now() + 10 * 60 * 1000; // 10 minutes
